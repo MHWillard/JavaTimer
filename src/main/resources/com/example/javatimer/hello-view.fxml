@@ -33,6 +33,6 @@
         <!-- center all buttons, but hide pause/clear button pane and switch in and out-->
         <Button text="Start" onAction="#onStartButtonClick"/>
         <Button text="Pause"/>
-        <Button text="Clear"/>
+        <Button text="Clear" onAction="#onClearButtonClick"/>
     </HBox>
 </VBox>

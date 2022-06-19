@@ -5,6 +5,7 @@ import java.util.TimerTask;
 import java.text.DecimalFormat;
 
 public class Time {
+    private Timer timer;
     private String inputTimeString;
     private int inputTime;
     private int minutes;
@@ -20,9 +21,13 @@ public class Time {
     //need method here: break input into minutes and seconds
 
     public String getInputTime() {
-        return String.format("%04d",inputTime);
+        return String.format("%02d",inputTime);
         //maybe get int and return as string? might be better for the countdown
         //or: it takes minutes and seconds and converts them from 00-99
+    }
+
+    public String getSecondsText() {
+        return String.format("%02d",seconds);
     }
 
     public void setInputTime(int time) {
@@ -36,7 +41,6 @@ public class Time {
 
         //DecimalFormat df = new DecimalFormat("0000");
         //String inputText = df.format(inputTime);
-        String inputText = String.format("%04d",inputTime);
         //String s1 = inputText.substring(0, 2);
         //String s2 = inputText.substring(3, 5);
 
@@ -45,7 +49,7 @@ public class Time {
 
         //return df.format(inputTime);
         //return s1 + ":" + s2;
-        return inputText;
+        return String.format("%02d",seconds);
     }
 
     public int getMinutes() {
@@ -65,11 +69,13 @@ public class Time {
     }
 
     public void countdownTime() {
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
-            int i = (minutes * 60) + seconds;
+            //int i = (minutes * 60) + seconds;
+            int i = seconds;
             public void run() {
                 System.out.println(i--);
+                setSeconds(i);
                 if (i<0) {
                     timer.cancel();
                 }
@@ -77,5 +83,7 @@ public class Time {
         }, 0, 1000);
     }
 
-    public void runTimer() {}
+    public void stopTimer() {
+        timer.cancel();
+    }
 }
