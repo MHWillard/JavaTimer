@@ -14,25 +14,6 @@ public class HelloController {
     @FXML
     protected void onStartButtonClick() {
         System.out.println("button clicked");
-        //on click: grab minuteText and secndText value
-        //add it to time object
-
-        //get text
-        //split: first two characters, last two characters
-        //assign first two: time.setMinutes(minutes);
-        //last two: time.setSeconds(seconds);
-        String minText = timeText.getText().substring(0, 2);
-        String secText = timeText.getText().substring(2, 4);
-        int minutes = Integer.parseInt(minText);
-        int seconds = Integer.parseInt(secText);
-
-        //0230 = 0,1,2,3 =
-
-        time.setMinutes(minutes);
-        time.setSeconds(seconds);
-        System.out.println("minutes: " + time.getMinutes());
-        System.out.println("seconds: " + time.getSeconds());
-
         time.countdownTime();
     }
 
@@ -50,11 +31,26 @@ public class HelloController {
         timeText.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(timeText.getText());
+                //String minText = timeText.getText().substring(0, 2);
+                //String secText = timeText.getText().substring(2, 4);
+                int toInputTime;
+
+                if (timeText.getText().isBlank()) {
+                    toInputTime = 0;
+                } else {
+                    toInputTime = Integer.parseInt(timeText.getText());
+                }
+
+                time.setInputTime(toInputTime);
+                timeText.setText(time.convertTime());
+
+                System.out.println(time.convertTime());
+                System.out.println(time.convertTime().length());
             }
         });
 
         //TODO: when text value changes, format() into 0000 format, then return text to display as 00:00
+        //TODO: have function always grabbing values on update then pushing up to format
 
         //TODO: when counting down, adjust timerText so format changes value and displays (but lock editing when active)
     }
